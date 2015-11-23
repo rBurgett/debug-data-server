@@ -1,0 +1,19 @@
+{
+  "name": "debug-data-server",
+  "version": "1.0.0",
+  "description": "debug-data-server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rBurgett/debug-data-server.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/rBurgett/debug-data-server/issues"
+  },
+  "homepage": "https://github.com/rBurgett/debug-data-server#readme"
+}
