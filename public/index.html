@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta encoding="utf8">
+<title>debug-data-server</title>
+</head>
+<body>
+    <style>
+        body {
+            font-family: Helvetica, sans-serif;
+            padding: 20;
+        }
+    </style>
+
+    <h1>Ok</h1>
+    <input type="file" id="js-fileInput"></input>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $('#js-fileInput').on('change', function(e) {
+
+                var formData = new FormData();
+                var file = e.target.files[0];
+
+                console.log(file);
+
+                formData.append('appDataZip', file);
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('post', '/project-files', true);
+
+                xhr.upload.onprogress = function(e) {
+                    if (e.lengthComputable) {
+                        var percentage = (e.loaded / e.total) * 100;
+                        // $('div.progress div.bar').css('width', percentage + '%');
+                        console.log(percentage + '%');
+                    }
+                };
+
+                xhr.onerror = function(e) {
+                    console.error('An error occurred while submitting the form. Maybe your file is too big');
+                };
+
+                xhr.onload = function() {
+                    console.log('Done!');
+                };
+
+                xhr.send(formData);
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/rBurgett/debug-data-server#readme",
   "dependencies": {
-    "express": "^4.13.3"
+    "body-parser": "^1.14.1",
+    "connect-multiparty": "^2.0.0",
+    "express": "^4.13.3",
+    "method-override": "^2.3.5"
   }
 }
