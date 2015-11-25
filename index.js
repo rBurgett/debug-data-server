@@ -31,9 +31,8 @@ app.use(multipart({
 
 app.post('/project-files', function(req, res) {
     'use strict';
-    if(req.files.appDataZip) {
-        var filePath = req.files.appDataZip.path;
-        console.log(filePath);
+    if(req.files.uploadFile) {
+        var filePath = req.files.uploadFile.path;
 
         var awsUploader = s3Client.uploadFile({
             localFile: filePath,
