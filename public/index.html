@@ -12,8 +12,8 @@
         }
     </style>
 
-    <h1>Ok</h1>
     <input type="file" id="js-fileInput"></input>
+    <h1 id="js-progress"></h1>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script type="text/javascript">
@@ -34,13 +34,12 @@
                 xhr.upload.onprogress = function(e) {
                     if (e.lengthComputable) {
                         var percentage = (e.loaded / e.total) * 100;
-                        // $('div.progress div.bar').css('width', percentage + '%');
-                        console.log(percentage + '%');
+                        $('#js-progress').text(percentage.toFixed() + '%');
                     }
                 };
 
                 xhr.onerror = function(e) {
-                    console.error('An error occurred while submitting the form. Maybe your file is too big');
+                    console.error(e);
                 };
 
                 xhr.onload = function() {
