@@ -60,7 +60,7 @@ app.post('/project-files', function(req, res) {
         var filePath = req.files.uploadFile.path;
 
         var key = new Date().getTime() + (req.body.name.replace(/\W/g, '')).toLowerCase() + path.basename(filePath);
-        var link = 'https://s3.amazonaws.com/com.literacystarter.data/' + key;
+        var link = env.s3BucketLink + key;
 
         var awsUploader = s3Client.uploadFile({
             localFile: filePath,
