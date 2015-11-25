@@ -97,6 +97,7 @@ app.post('/project-files', function(req, res) {
                     mailgun.messages().send(emailData, function(err) {
                         if(err) {
                             console.error(err.message);
+                            reportError(err.message);
                         }
                     });
                 }
