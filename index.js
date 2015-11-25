@@ -22,25 +22,25 @@ var s3Client = s3.createClient({
     }
 });
 
-var mailgun = require('mailgun-js')({
-    apiKey: env.mailgunKey,
-    domain: env.mailgunDomain
-});
+// var mailgun = require('mailgun-js')({
+//     apiKey: env.mailgunKey,
+//     domain: env.mailgunDomain
+// });
 
-var reportError = function(errString) {
-    'use strict';
-    var emailData = {
-        from: 'LiteracyStarter.com <no-reply@literacystarter.com>',
-        to: env.errorEmailAddress,
-        subject: 'Error - LiteracyStarter.com',
-        html: '<p style="color:#F00;">' + errString + '</p>'
-    }
-    mailgun.messages().send(emailData, function(err) {
-        if(err) {
-            console.error(err.message);
-        }
-    });
-};
+// var reportError = function(errString) {
+//     'use strict';
+//     var emailData = {
+//         from: 'LiteracyStarter.com <no-reply@literacystarter.com>',
+//         to: env.errorEmailAddress,
+//         subject: 'Error - LiteracyStarter.com',
+//         html: '<p style="color:#F00;">' + errString + '</p>'
+//     }
+//     mailgun.messages().send(emailData, function(err) {
+//         if(err) {
+//             console.error(err.message);
+//         }
+//     });
+// };
 
 var app = express();
 
@@ -60,7 +60,7 @@ app.post('/project-files', function(req, res) {
         var filePath = req.files.uploadFile.path;
 
         var key = new Date().getTime() + (req.body.name.replace(/\W/g, '')).toLowerCase() + path.basename(filePath);
-        var link = env.s3BucketLink + key;
+        // var link = env.s3BucketLink + key;
 
         var awsUploader = s3Client.uploadFile({
             localFile: filePath,
@@ -73,7 +73,7 @@ app.post('/project-files', function(req, res) {
 
         awsUploader.on('error', function(err) {
             console.error('unable to upload:', err.stack);
-            reportError(err.message);
+            // reportError(err.message);
         });
 
         awsUploader.on('progress', function() {
@@ -86,20 +86,20 @@ app.post('/project-files', function(req, res) {
             fs.unlink(filePath, function(err) {
                 if(err) {
                     console.error(err.message);
-                    reportError(err.message);
+                    // reportError(err.message);
                 } else {
-                    var emailData = {
-                        from: 'LiteracyStarter.com <no-reply@literacystarter.com>',
-                        to: env.uploadNotifyEmailAddress,
-                        subject: 'New Data Upload',
-                        html: '<p><strong>Name:</strong><br>' + req.body.name + '</p><p><strong>Email:</strong><br>' + req.body.email + '</p><p><strong>Description:</strong><br>' + req.body.description + '</p><p><strong>Download Link:</strong><br><a href="' + link + '">' + link +'</a></p>'
-                    };
-                    mailgun.messages().send(emailData, function(err) {
-                        if(err) {
-                            console.error(err.message);
-                            reportError(err.message);
-                        }
-                    });
+                    // var emailData = {
+                    //     from: 'LiteracyStarter.com <no-reply@literacystarter.com>',
+                    //     to: env.uploadNotifyEmailAddress,
+                    //     subject: 'New Data Upload',
+                    //     html: '<p><strong>Name:</strong><br>' + req.body.name + '</p><p><strong>Email:</strong><br>' + req.body.email + '</p><p><strong>Description:</strong><br>' + req.body.description + '</p><p><strong>Download Link:</strong><br><a href="' + link + '">' + link +'</a></p>'
+                    // };
+                    // mailgun.messages().send(emailData, function(err) {
+                    //     if(err) {
+                    //         console.error(err.message);
+                    //         reportError(err.message);
+                    //     }
+                    // });
                 }
             });
             console.log('done uploading');
