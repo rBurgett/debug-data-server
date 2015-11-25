@@ -10,7 +10,19 @@
             font-family: Helvetica, sans-serif;
             padding: 20;
         }
+        div {
+            margin-bottom: 10px;
+        }
     </style>
+    <div>
+        <label>Name: </label><input type="text" id="js-name"></input>
+    </div>
+    <div>
+        <label>Email: </label><input type="email" id="js-email"></input>
+    </div>
+    <div>
+        <label>Description: </label><input type="text" id="js-description"></input>
+    </div>
 
     <input type="file" id="js-fileInput"></input>
     <h1 id="js-progress"></h1>
@@ -27,6 +39,9 @@
                 console.log(file);
 
                 formData.append('uploadFile', file);
+                formData.append('name', $('#js-name').val());
+                formData.append('email', $('#js-email').val());
+                formData.append('description', $('#js-description').val());
 
                 var xhr = new XMLHttpRequest();
                 xhr.open('post', '/project-files', true);

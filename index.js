@@ -31,6 +31,11 @@ app.use(multipart({
 
 app.post('/project-files', function(req, res) {
     'use strict';
+
+    console.log(req.body.name);
+    console.log(req.body.email);
+    console.log(req.body.description);
+
     if(req.files.uploadFile) {
         var filePath = req.files.uploadFile.path;
 
